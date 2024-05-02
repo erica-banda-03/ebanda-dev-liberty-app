@@ -1,0 +1,67 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ebanda-dev-liberty-app-service
+  description: 'The Liberty service for ebanda-dev-liberty-app (Creates a Liberty getting started app)'
+  annotations:
+    argocd/app-name: ebanda-dev-liberty-app-dev
+    backstage.io/kubernetes-id: ebanda-dev-liberty-app
+    backstage.io/kubernetes-namespace: ebanda-dev
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: erica-banda-03/ebanda-dev-liberty-app
+    janus-idp.io/tekton : ebanda-dev-liberty-app
+  labels:
+    backstage.io/kubernetes-id: ebanda-dev-liberty-app
+  tags:
+    - java
+    - liberty
+    - maven
+    - book
+    - example
+  links:
+    - url: https://console-openshift-console.apps.662f97af563fb9001ea854fa.cloud.techzone.ibm.com/dev-pipelines/ns/ebanda-dev/
+      title: Pipelines
+      icon: web
+    - url: https://console-openshift-console.apps.662f97af563fb9001ea854fa.cloud.techzone.ibm.com/k8s/ns/ebanda-dev/deployments/ebanda-dev-liberty-app
+      title: Deployment
+      icon: web
+    - url: https://openliberty.io/docs/latest/overview.html
+      title: Open Liberty Docs
+      icon: web
+spec:
+  type: service
+  lifecycle: production
+  owner: "user:default/erica-banda-03"
+  system: idp-system-ebanda-dev
+  providesApis:
+    - ebanda-dev-liberty-app-api
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: idp-system-ebanda-dev
+  tags:
+    - rhdh
+    - book
+spec:
+  owner: "user:default/erica-banda-03"
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: ebanda-dev-liberty-app-api
+  description: API surface exposed by the Liberty service
+  links:
+    - url: https://ebanda-dev-liberty-app-ebanda-dev.apps.662f97af563fb9001ea854fa.cloud.techzone.ibm.com/q/swagger-ui
+      title: Swagger UI
+      icon: web
+    - url: https://github.com/erica-banda-03/ebanda-dev-liberty-app/-/blob/main/src/main/resources/META-INF/openapi.yaml
+      title: API Spec
+      icon: code
+spec:
+  type: openapi
+  lifecycle: production
+  owner: "user:default/erica-banda-03"
+  system: idp-system-ebanda-dev
+  definition:
+    $text: ./src/main/resources/META-INF/openapi.yaml
